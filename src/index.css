@@ -6,10 +6,72 @@
   --color-ink: #111111;
   --color-sand: #f3ede3;
   --color-beige: #d9cdb8;
-  --color-stone: #8a8174;
+  --color-stone: #8a8680;
+  /* Home page palette */
+  --color-page: #0c0c0c;
+  --color-panel: #0c0c0c;
+  --color-fg: #f4f1ea;
+  --color-muted: #8a8680;
 }
 
-body { @apply bg-sand font-sans text-ink antialiased; }
-.eyebrow { @apply text-xs uppercase tracking-[0.3em] text-stone; }
-.btn { @apply inline-flex items-center justify-center bg-ink px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] text-sand transition duration-300 hover:bg-stone; }
-.btn-outline { @apply inline-flex items-center justify-center border border-ink px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] transition duration-300 hover:bg-ink hover:text-sand; }
+body { @apply bg-page font-sans text-fg antialiased; }
+.eyebrow { @apply text-xs uppercase tracking-[0.3em] text-muted; }
+.btn { @apply inline-flex items-center justify-center rounded-full px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] text-fg transition duration-300; }
+.btn-outline { @apply inline-flex items-center justify-center rounded-full px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] text-fg transition duration-300; }
+
+/* Home: pills, arches */
+.pill { @apply inline-flex items-center rounded-full px-3 py-2 text-sm text-muted transition hover:text-fg sm:px-5; }
+.pill-active { @apply bg-fg text-panel hover:text-panel; }
+.pill-ghost { @apply inline-flex h-10 items-center rounded-full px-5 text-sm text-fg transition; }
+.pill-solid { @apply inline-flex h-10 items-center rounded-full bg-fg px-5 text-sm text-panel transition; }
+.arch { @apply relative block min-w-0 flex-1 overflow-hidden rounded-t-full bg-white/5; }
+.arrow-btn { @apply absolute bottom-10 z-10 flex h-12 w-12 items-center justify-center rounded-full text-lg text-fg transition; }
+
+/* Glass: 28px blur, 180% saturate, .07 fill, .18 edge, top highlight + bottom inner shade */
+.glass, .glass-panel, .pill-ghost, .arrow-btn, .arch > span:last-child {
+  background: rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+}
+/* Arch name chips: same glass, plus a darker backdrop so text stays readable on light photos */
+.arch > span:last-child {
+  -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(0.62);
+  backdrop-filter: blur(28px) saturate(180%) brightness(0.62);
+}
+
+/* Other glass surfaces (unchanged) */
+.glass-strong, .btn, .btn-outline {
+  background: rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.glass-photo {
+  background: #161616;
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+.glass-strong:hover, .pill-ghost:hover, .arrow-btn:hover, .btn:hover, .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* No glass on glass: controls that sit on a panel surface lose their own fill and blur
+   and keep just the edge and inner highlight. Items over photos (arch chips, badge, arrows) keep full glass. */
+.glass-panel :is(.glass, .glass-strong, .pill-ghost, .btn, .btn-outline):not(.arch *) {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+}
+.glass-panel :is(.glass, .glass-strong, .pill-ghost, .btn, .btn-outline):not(.arch *):hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Near-black page with one soft white wash, top-left */
+.glass-page { position: relative; isolation: isolate; overflow: clip; background: var(--color-page); }
+.glass-page::before {
+  content: ""; position: fixed; z-index: -1; pointer-events: none;
+  top: -8rem; left: -8rem; width: min(36rem, 90vw); height: min(36rem, 90vw);
+  border-radius: 9999px; background: rgba(255, 255, 255, 0.08); filter: blur(120px);
+}

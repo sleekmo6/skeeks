@@ -1,9 +1,9 @@
 import { useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
 import ProductCard from '../components/ProductCard'
-import { products } from '../data/products'
+import { products, categories } from '../data/products'
 
-const tabs = ['All', 'Clothing', 'Sneakers']
+const tabs = ['All', ...categories]
 
 export default function Shop() {
   const [params, setParams] = useSearchParams()
@@ -19,17 +19,17 @@ export default function Shop() {
       <p className="eyebrow">The collection</p>
       <h1 className="mt-2 font-display text-5xl">{category === 'All' ? 'Shop all' : category}</h1>
 
-      <div className="mt-10 flex flex-col gap-4 border-y border-beige py-4 md:flex-row md:items-center md:justify-between">
-        <div className="flex gap-6">
+      <div className="mt-10 flex flex-col gap-4 border-y border-white/15 py-4 md:flex-row md:items-center md:justify-between">
+        <div className="glass flex max-w-full gap-1 overflow-x-auto rounded-full p-1">
           {tabs.map((t) => (
             <button key={t} onClick={() => setParams(t === 'All' ? {} : { category: t })}
-              className={`text-xs uppercase tracking-[0.2em] transition ${category === t ? 'border-b border-ink pb-1' : 'text-stone hover:text-ink'}`}>
+              className={`pill shrink-0 whitespace-nowrap ${category === t ? 'pill-active' : ''}`}>
               {t}
             </button>
           ))}
         </div>
         <select value={sort} onChange={(e) => setSort(e.target.value)}
-          className="bg-transparent text-xs uppercase tracking-[0.2em] outline-none">
+          className="glass rounded-full px-4 py-2 text-xs uppercase tracking-[0.2em] outline-none [&>option]:bg-panel [&>option]:text-fg">
           <option value="featured">Featured</option>
           <option value="low">Price: Low to High</option>
           <option value="high">Price: High to Low</option>
@@ -39,6 +39,7 @@ export default function Shop() {
       <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 md:gap-x-6 lg:grid-cols-4">
         {list.map((p) => <ProductCard key={p.id} product={p} />)}
       </div>
+      {list.length === 0 && <p className="mt-10 text-muted">Nothing in {category} yet. New pieces are on the way.</p>}
     </div>
   )
 }

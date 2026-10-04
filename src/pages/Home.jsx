@@ -1,70 +1,98 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { HomeBar } from '../components/Navbar'
 import ProductCard from '../components/ProductCard'
-import { products, img } from '../data/products'
+import { products, categories, catLink, img, money } from '../data/products'
 
-const categories = [
-  { name: 'Clothing', image: 'photo-1434389677669-e08b4cac3105' },
-  { name: 'Sneakers', image: 'photo-1542291026-7eec264c27ff' },
-]
+// Arch heights: centre tallest, edges shortest
+const heights = ['h-[82%]', 'h-[92%]', 'h-full', 'h-[92%]', 'h-[82%]']
 
 export default function Home() {
+  const [start, setStart] = useState(0)
+  const n = products.length
+  const looks = Array.from({ length: 5 }, (_, k) => products[(start + k) % n])
   const featured = products.filter((p) => p.tag).slice(0, 4)
 
   return (
-    <>
-      {/* Hero */}
-      <section className="relative flex h-[88vh] min-h-[520px] items-end overflow-hidden bg-ink">
-        <img src={img('photo-1515886657613-9f3515b0c78f', 1800)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
-        <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 text-sand md:px-8 md:pb-24">
-          <p className="eyebrow !text-beige">Autumn / Winter {new Date().getFullYear()}</p>
-          <h1 className="mt-4 max-w-2xl font-display text-5xl leading-[1.05] md:text-7xl">
-            Quiet luxury, <em className="font-normal">worn loud.</em>
+    <div className="p-3 md:p-6">
+      {/* Hero panel */}
+      <section className="glass-panel overflow-hidden rounded-3xl">
+        <HomeBar />
+
+        <div className="mx-auto max-w-4xl px-6 pt-14 text-center md:pt-16">
+          <span className="glass inline-block rounded-full px-5 py-2 text-sm text-muted">
+            New autumn / winter collection
+          </span>
+          <h1 className="mt-6 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+            Quiet luxury,<br />worn loud.
           </h1>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link to="/shop" className="btn !bg-sand !text-ink hover:!bg-beige">Shop the collection</Link>
-            <Link to="/shop?category=Sneakers" className="btn-outline !border-sand !text-sand hover:!bg-sand hover:!text-ink">Sneakers</Link>
+          <p className="mx-auto mt-5 max-w-xl text-muted">
+            Clothing and sneakers cut for everyday movement. Considered design, made to be lived in.
+          </p>
+        </div>
+
+        {/* Arch lookbook */}
+        <div className="relative mt-8 md:mt-10">
+          <button type="button" aria-label="Previous" onClick={() => setStart((start - 1 + n) % n)} className="arrow-btn left-4 md:left-[17%]">←</button>
+          <button type="button" aria-label="Next" onClick={() => setStart((start + 1) % n)} className="arrow-btn right-4 md:right-[17%]">→</button>
+
+          <div className="-mx-[6%] flex h-[320px] items-end gap-3 md:h-[420px] md:gap-5">
+            {looks.map((p, k) => (
+              <Link key={p.id} to={`/product/${p.id}`} aria-label={p.name}
+                className={`arch group ${heights[k]} ${k > 1 ? 'hidden md:block' : ''}`}>
+                <img src={img(p.images[0], 600)} alt={p.name} loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                {k === 2 && (
+                  <span className="absolute bottom-14 left-1/2 flex h-24 w-24 -translate-x-1/2 flex-col items-center justify-center rounded-full glass-strong text-center">
+                    <span className="text-[11px] text-fg/80">Price</span>
+                    <span className="text-lg font-medium">{money(p.price)}</span>
+                  </span>
+                )}
+                <span className="absolute bottom-4 left-1/2 max-w-[85%] -translate-x-1/2 truncate rounded-full border border-white/30 bg-black/45 px-3 py-1 text-xs text-fg backdrop-blur-md backdrop-brightness-[0.6] [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]">
+                  {p.name}
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Categories */}
-      <section className="mx-auto max-w-7xl px-5 py-20 md:px-8">
+      <section className="mx-auto max-w-7xl px-2 pt-16 md:px-5">
         <p className="eyebrow">Shop by category</p>
-        <div className="mt-6 grid gap-4 md:grid-cols-2 md:gap-6">
-          {categories.map((c) => (
-            <Link key={c.name} to={`/shop?category=${c.name}`} className="group relative block aspect-[4/5] overflow-hidden bg-beige md:aspect-[5/6]">
-              <img src={img(c.image, 1100)} alt={c.name} loading="lazy"
-                className="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105" />
-              <div className="absolute inset-0 bg-ink/20 transition group-hover:bg-ink/40" />
-              <div className="absolute bottom-8 left-8 text-sand">
-                <h2 className="font-display text-4xl">{c.name}</h2>
-                <span className="mt-2 inline-block border-b border-sand pb-1 text-xs uppercase tracking-[0.2em] transition-all group-hover:pr-4">Explore →</span>
-              </div>
-            </Link>
-          ))}
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {categories.map((c) => {
+            const items = products.filter((p) => p.category === c)
+            return (
+              <Link key={c} to={catLink(c)} className="glass-panel group flex items-center gap-3 rounded-2xl p-3 transition duration-300 hover:-translate-y-0.5">
+                <span className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-white/5">
+                  {items[0] && (
+                    <img src={img(items[0].images[0], 200)} alt="" loading="lazy"
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+                  )}
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm leading-tight">{c}</span>
+                </span>
+              </Link>
+            )
+          })}
         </div>
       </section>
 
       {/* Featured */}
-      <section className="mx-auto max-w-7xl px-5 pb-24 md:px-8">
+      <section className="mx-auto max-w-7xl px-2 pb-20 pt-16 md:px-5">
         <div className="mb-10 flex items-end justify-between">
           <div>
-            <p className="eyebrow">Curated for you</p>
+            <p className="eyebrow !text-muted">Curated for you</p>
             <h2 className="mt-2 font-display text-4xl">Featured pieces</h2>
           </div>
-          <Link to="/shop" className="hidden border-b border-ink pb-1 text-xs uppercase tracking-[0.2em] hover:text-stone md:block">View all</Link>
+          <Link to="/shop" className="hidden border-b border-white pb-1 text-xs uppercase tracking-[0.2em] md:block">View all</Link>
         </div>
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-x-6">
           {featured.map((p) => <ProductCard key={p.id} product={p} />)}
         </div>
       </section>
-
-      {/* Banner */}
-      <section className="bg-ink py-20 text-center text-sand">
-        <p className="eyebrow !text-beige">Free shipping over $150</p>
-        <h2 className="mx-auto mt-4 max-w-xl px-5 font-display text-3xl md:text-4xl">Considered design. Made to be lived in.</h2>
-      </section>
-    </>
+    </div>
   )
 }

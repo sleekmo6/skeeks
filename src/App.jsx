@@ -9,13 +9,18 @@ import Cart from './pages/Cart'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
   return null
 }
 
+
 export default function App() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="glass-page flex min-h-screen flex-col">
       <ScrollToTop />
       <Navbar />
       <main className="flex-1">
