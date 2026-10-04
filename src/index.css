@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Playfair Display", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --color-ink: #111111;
+  --color-sand: #f3ede3;
+  --color-beige: #d9cdb8;
+  --color-stone: #8a8174;
+}
+
+body { @apply bg-sand font-sans text-ink antialiased; }
+.eyebrow { @apply text-xs uppercase tracking-[0.3em] text-stone; }
+.btn { @apply inline-flex items-center justify-center bg-ink px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] text-sand transition duration-300 hover:bg-stone; }
+.btn-outline { @apply inline-flex items-center justify-center border border-ink px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] transition duration-300 hover:bg-ink hover:text-sand; }
