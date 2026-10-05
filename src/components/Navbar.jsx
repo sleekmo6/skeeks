@@ -14,7 +14,7 @@ export function HomeBar() {
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-y-5 px-6 pt-6 text-fg md:grid md:grid-cols-[1fr_auto_1fr] md:px-14 md:pt-8">
-      <Link to="/" className="order-1 font-display text-xl tracking-[0.3em]">SKEEKS</Link>
+      <Link to="/" className="order-1 font-logo text-[1.75rem] font-normal leading-none tracking-[0.05em] md:text-[3rem]">Skeeks</Link>
 
       <nav className="order-3 flex w-full justify-between glass overflow-x-auto rounded-full p-1 md:order-2 md:w-auto md:justify-center">
         <Link to="/" className="pill pill-active">Home</Link>
@@ -52,7 +52,7 @@ export default function Navbar() {
 
   return (
     <header className="glass sticky top-0 z-50">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20 md:px-8">
         <button className="lg:hidden" onClick={() => setOpen(!open)} aria-label="Menu">
           <span className="block h-px w-6 bg-fg" />
           <span className="mt-2 block h-px w-6 bg-fg" />
@@ -66,8 +66,8 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <Link to="/" className="font-display text-xl tracking-[0.3em] lg:order-first">
-          SKEEKS
+        <Link to="/" className="font-logo text-[1.75rem] font-normal leading-none tracking-[0.05em] md:text-[3rem] lg:order-first">
+          Skeeks
         </Link>
 
         <Link to="/cart" className="text-xs uppercase tracking-[0.2em] transition hover:text-stone">

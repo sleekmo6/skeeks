@@ -11,7 +11,7 @@ export default function Cart() {
 
   return (
     <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-      <h1 className="font-display text-5xl">Your cart</h1>
+      <h1 className="text-5xl">Your cart</h1>
 
       {lines.length === 0 ? (
         <div className="py-24 text-center">
@@ -29,7 +29,7 @@ export default function Cart() {
                 <div className="flex flex-1 flex-col justify-between">
                   <div className="flex justify-between gap-4">
                     <div>
-                      <h3 className="font-medium">{product.name}</h3>
+                      <h3 className="font-display font-medium">{product.name}</h3>
                       <p className="mt-1 text-xs uppercase tracking-[0.15em] text-stone">Size {size}</p>
                     </div>
                     <p>{money(product.price * qty)}</p>

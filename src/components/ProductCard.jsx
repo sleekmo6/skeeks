@@ -16,7 +16,7 @@ export default function ProductCard({ product }) {
       </div>
       <div className="mt-4 flex items-start justify-between gap-4 px-1 pb-1">
         <div>
-          <h3 className="text-sm font-medium">{product.name}</h3>
+          <h3 className="font-display text-sm font-medium">{product.name}</h3>
           <p className="mt-1 text-xs uppercase tracking-[0.15em] text-stone">{product.category}</p>
         </div>
         <p className="text-sm">{money(product.price)}</p>

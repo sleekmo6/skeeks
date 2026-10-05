@@ -17,7 +17,7 @@ export default function Shop() {
   return (
     <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
       <p className="eyebrow">The collection</p>
-      <h1 className="mt-2 font-display text-5xl">{category === 'All' ? 'Shop all' : category}</h1>
+      <h1 className="mt-2 text-5xl">{category === 'All' ? 'Shop all' : category}</h1>
 
       <div className="mt-10 flex flex-col gap-4 border-y border-white/15 py-4 md:flex-row md:items-center md:justify-between">
         <div className="glass flex max-w-full gap-1 overflow-x-auto rounded-full p-1">

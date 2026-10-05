@@ -24,11 +24,11 @@ function Photo({ name }) {
 
 function Chip({ name }) {
   return (
-    <Link to={catLink(name)} draggable={false}
+    <span
       className="glass absolute bottom-5 left-5 rounded-full px-4 py-2 text-sm text-fg"
       style={{ background: 'rgba(0,0,0,0.45)', WebkitBackdropFilter: chipFilter, backdropFilter: chipFilter }}>
       {name}
-    </Link>
+    </span>
   )
 }
 
@@ -110,10 +110,11 @@ export default function CategoryScroll() {
     return (
       <section aria-label="Shop by category" className="mx-auto flex max-w-7xl flex-col gap-4 px-2 pt-16 md:px-5">
         {categories.map((c) => (
-          <div key={c} className="relative h-[70vh] overflow-hidden rounded-3xl border border-white/15 bg-white/5 md:h-[78vh]">
+          <Link key={c} to={catLink(c)} draggable={false}
+            className="relative block h-[70vh] overflow-hidden rounded-3xl border border-white/15 bg-white/5 md:h-[78vh]">
             <Photo name={c} />
             <Chip name={c} />
-          </div>
+          </Link>
         ))}
       </section>
     )
@@ -135,12 +136,12 @@ export default function CategoryScroll() {
         </div>
         <div className="relative h-[70vh] overflow-hidden md:h-[78vh]">
           {categories.map((c, i) => (
-            <div key={c} ref={(el) => { slides.current[i] = el }}
-              className="absolute bottom-0 left-0 top-0 overflow-hidden rounded-3xl border border-white/15 bg-white/5 will-change-transform"
+            <Link key={c} to={catLink(c)} draggable={false} ref={(el) => { slides.current[i] = el }}
+              className="absolute block bottom-0 left-0 top-0 overflow-hidden rounded-3xl border border-white/15 bg-white/5 will-change-transform"
               style={{ width: `${SLIDE}%`, transform: `translateX(${i * (STEP / SLIDE) * 100}%)` }}>
               <Photo name={c} />
               <Chip name={c} />
-            </div>
+            </Link>
           ))}
         </div>
       </div>

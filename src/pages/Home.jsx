@@ -24,7 +24,7 @@ export default function Home() {
           <span className="glass inline-block rounded-full px-5 py-2 text-sm text-muted">
             New autumn / winter collection
           </span>
-          <h1 className="mt-6 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+          <h1 className="mt-6 font-display text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
             Quiet luxury,<br />worn loud.
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-muted">
@@ -49,7 +49,7 @@ export default function Home() {
                     <span className="text-lg font-medium">{money(p.price)}</span>
                   </span>
                 )}
-                <span className="absolute bottom-4 left-1/2 max-w-[85%] -translate-x-1/2 truncate rounded-full border border-white/30 bg-black/45 px-3 py-1 text-xs text-fg backdrop-blur-md backdrop-brightness-[0.6] [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]">
+                <span className="absolute bottom-4 left-1/2 max-w-[85%] -translate-x-1/2 truncate rounded-full border border-white/30 bg-black/45 px-3 py-1 font-display text-xs text-fg backdrop-blur-md backdrop-brightness-[0.6] [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]">
                   {p.name}
                 </span>
               </Link>
@@ -66,7 +66,7 @@ export default function Home() {
         <div className="mb-10 flex items-end justify-between">
           <div>
             <p className="eyebrow !text-muted">Curated for you</p>
-            <h2 className="mt-2 font-display text-4xl">Featured pieces</h2>
+            <h2 className="mt-2 text-4xl">Featured pieces</h2>
           </div>
           <Link to="/shop" className="hidden border-b border-white pb-1 text-xs uppercase tracking-[0.2em] md:block">View all</Link>
         </div>
