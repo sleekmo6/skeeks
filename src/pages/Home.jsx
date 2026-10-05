@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { HomeBar } from '../components/Navbar'
 import ProductCard from '../components/ProductCard'
-import { products, categories, catLink, img, money } from '../data/products'
+import CategoryScroll from '../components/CategoryScroll'
+import { products, img, money } from '../data/products'
 
 // Arch heights: centre tallest, edges shortest
 const heights = ['h-[82%]', 'h-[92%]', 'h-full', 'h-[92%]', 'h-[82%]']
@@ -57,28 +58,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="mx-auto max-w-7xl px-2 pt-16 md:px-5">
-        <p className="eyebrow">Shop by category</p>
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {categories.map((c) => {
-            const items = products.filter((p) => p.category === c)
-            return (
-              <Link key={c} to={catLink(c)} className="glass-panel group flex items-center gap-3 rounded-2xl p-3 transition duration-300 hover:-translate-y-0.5">
-                <span className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-white/5">
-                  {items[0] && (
-                    <img src={img(items[0].images[0], 200)} alt="" loading="lazy"
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
-                  )}
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-sm leading-tight">{c}</span>
-                </span>
-              </Link>
-            )
-          })}
-        </div>
-      </section>
+      {/* Categories: sticky scroll-driven panels */}
+      <CategoryScroll />
 
       {/* Featured */}
       <section className="mx-auto max-w-7xl px-2 pb-20 pt-16 md:px-5">
