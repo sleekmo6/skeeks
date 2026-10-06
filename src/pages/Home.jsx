@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { HomeBar } from '../components/Navbar'
 import ProductCard from '../components/ProductCard'
 import CategoryScroll from '../components/CategoryScroll'
+import FlashSales from '../components/FlashSales'
 import { products, img, money } from '../data/products'
 
 // Arch heights: centre tallest, edges shortest
@@ -60,6 +61,8 @@ export default function Home() {
 
       {/* Categories: sticky scroll-driven panels */}
       <CategoryScroll />
+
+      <FlashSales />
 
       {/* Featured */}
       <section className="mx-auto max-w-7xl px-2 pb-20 pt-16 md:px-5">

@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getProduct, img, money } from '../data/products'
+import { getSaleProduct } from '../data/sale'
 import { useCart } from '../context/CartContext'
 
 export default function Product() {
   const { id } = useParams()
-  const product = getProduct(id)
+  const product = getProduct(id) || getSaleProduct(id)
   const { add } = useCart()
   const navigate = useNavigate()
   const [active, setActive] = useState(0)
@@ -47,7 +48,10 @@ export default function Product() {
         <div className="glass-panel h-fit rounded-3xl p-6 md:p-8">
           <p className="eyebrow">{product.category}</p>
           <h1 className="mt-3 font-display text-4xl text-fg md:text-5xl">{product.name}</h1>
-          <p className="mt-4 text-2xl text-muted">{money(product.price)}</p>
+          <p className="mt-4 text-2xl text-muted">
+            {money(product.price)}
+            {product.oldPrice && <span className="ml-3 text-base line-through opacity-70">{money(product.oldPrice)}</span>}
+          </p>
           <p className="mt-6 leading-relaxed text-muted">{product.description}</p>
 
           <div className="mt-10">

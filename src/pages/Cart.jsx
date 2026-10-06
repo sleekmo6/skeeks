@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { getProduct, img, money } from '../data/products'
+import { getSaleProduct } from '../data/sale'
 
 export default function Cart() {
   const { items, setQty, remove } = useCart()
-  const lines = items.map((i) => ({ ...i, product: getProduct(i.id) })).filter((l) => l.product)
+  const lines = items.map((i) => ({ ...i, product: getProduct(i.id) || getSaleProduct(i.id) })).filter((l) => l.product)
   const subtotal = lines.reduce((n, l) => n + l.product.price * l.qty, 0)
   const shipping = subtotal === 0 || subtotal >= 150 ? 0 : 9
   const total = subtotal + shipping
